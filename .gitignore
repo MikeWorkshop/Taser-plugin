@@ -1,0 +1,17 @@
+# IntelliJ
+.idea/
+*.iml
+
+# Maven / Gradle
+target/
+build/
+
+# Compiled classes
+*.class
+
+# Plugins output
+*.jar
+
+# Logs
+*.log
+*.yml~
