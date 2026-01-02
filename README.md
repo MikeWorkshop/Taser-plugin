@@ -18,4 +18,5 @@ Use API:
 	    <groupId>com.github.MikeWorkshop</groupId>
 	    <artifactId>Taser-plugin</artifactId>
 	    <version>Tag</version>
+		<scope>provided</scope>
 	</dependency>
