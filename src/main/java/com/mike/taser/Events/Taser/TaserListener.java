@@ -26,17 +26,15 @@ import java.util.concurrent.TimeUnit;
 
 public class TaserListener implements Listener {
 
-    private int COOLDOWN_SECONDS = 5;
-    private Cache<UUID, Long> taserTime = CacheBuilder.newBuilder().expireAfterWrite(COOLDOWN_SECONDS, TimeUnit.SECONDS).build();
+    private static int COOLDOWN_SECONDS = 5;
+    private static Cache<UUID, Long> taserTime = CacheBuilder.newBuilder().expireAfterWrite(COOLDOWN_SECONDS, TimeUnit.SECONDS).build();
 
-    private boolean isTased(Player p) {
+    public static boolean isTased(Player p) {
         return taserTime.getIfPresent(p.getUniqueId()) != null;
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.NORMAL ,ignoreCancelled = true)
     public void onTaser(TaserEvent e){
-        if (e.isCancelled()) return;
-
         Player player = e.getAttacker();
         Player target = e.getVictim();
 
@@ -95,6 +93,9 @@ public class TaserListener implements Listener {
 
         TaserEvent event = new TaserEvent(player, target);
         Bukkit.getPluginManager().callEvent(event);
+        if (event.isCancelled()) {
+            e.setCancelled(true);
+        }
     }
 
     @EventHandler(priority = EventPriority.HIGHEST)
@@ -128,7 +129,7 @@ public class TaserListener implements Listener {
         }
     }
 
-    @EventHandler(priority = EventPriority.HIGHEST)
+    @EventHandler(priority = EventPriority.LOWEST)
     public void onCommand(PlayerCommandPreprocessEvent e) {
         if (isTased(e.getPlayer())) {
             e.setCancelled(true);
@@ -146,6 +147,5 @@ public class TaserListener implements Listener {
             e.setCancelled(true);
             player.sendMessage("§cNon puoi sparare da taserato");
         }
-
     }
 }

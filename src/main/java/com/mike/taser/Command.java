@@ -39,7 +39,7 @@ public class Command implements CommandExecutor {
                     player.sendMessage(ChatColor.RED + "Utilizzo corretto: /taser get <taser / ricarica>");
                 }
             } else {
-                player.sendMessage(ChatColor.RED + "Non hai il permesso necessario per eseguire questo coma ndo.");
+                player.sendMessage(ChatColor.RED + "Non hai il permesso necessario per eseguire questo comando.");
             }
         }
         return false;
